@@ -1,7 +1,7 @@
 import 'styles/index.scss'
 
-import { Icon } from 'assets/svgs'
+import IssueListPage from 'pages/IssueListPage'
 
-const App = () => <Icon />
+const App = () => <IssueListPage />
 
 export default App
