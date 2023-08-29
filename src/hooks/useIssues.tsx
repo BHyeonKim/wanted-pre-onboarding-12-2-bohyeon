@@ -1,18 +1,21 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateIssues } from 'redux/issuesSlice'
+import { toNextPage, updateIssues } from 'redux/issuesSlice'
 import { RootState } from 'redux/store'
 import type { IssueListResponseType, Issues } from 'types/types'
 import octokit from 'utils/octokit'
 
-const useIssues = (initialStep: number): [Issues, Dispatch<SetStateAction<number>>] => {
-  const [step, setStep] = useState(initialStep)
+const useIssues = (): [Issues, VoidFunction] => {
   const dispatch = useDispatch()
-  const { issues } = useSelector((state: RootState) => state.issues)
+  const { issues, currentPage } = useSelector((state: RootState) => state.issues)
+
+  const moveToNextPage = () => {
+    dispatch(toNextPage())
+  }
 
   const fetch = useCallback(async () => {
     const { data } = (await octokit.request(
-      `GET /repos/{owner}/{repo}/issues?page=${step}&sort=comments`,
+      `GET /repos/{owner}/{repo}/issues?page=${currentPage}&sort=comments`,
       {
         owner: 'facebook',
         repo: 'react',
@@ -20,13 +23,13 @@ const useIssues = (initialStep: number): [Issues, Dispatch<SetStateAction<number
     )) as IssueListResponseType
 
     dispatch(updateIssues(data))
-  }, [dispatch, step])
+  }, [currentPage, dispatch])
 
   useEffect(() => {
     fetch()
   }, [fetch])
 
-  return [issues, setStep]
+  return [issues, moveToNextPage]
 }
 
 export default useIssues

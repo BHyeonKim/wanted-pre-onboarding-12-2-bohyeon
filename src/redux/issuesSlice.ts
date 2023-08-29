@@ -3,10 +3,12 @@ import { Issues } from 'types/types'
 
 export interface IssuesState {
   issues: Issues
+  currentPage: number
 }
 
 const initialState: IssuesState = {
   issues: [],
+  currentPage: 1,
 }
 
 export const issuesSlice = createSlice({
@@ -16,9 +18,12 @@ export const issuesSlice = createSlice({
     updateIssues: (state, action: PayloadAction<Issues>) => {
       state.issues = [...state.issues, ...action.payload]
     },
+    toNextPage: (state) => {
+      state.currentPage += 1
+    },
   },
 })
 
-export const { updateIssues } = issuesSlice.actions
+export const { updateIssues, toNextPage } = issuesSlice.actions
 
 export default issuesSlice.reducer
