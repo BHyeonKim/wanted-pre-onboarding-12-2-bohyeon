@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import { toNextPage, updateIssues } from 'redux/issuesSlice'
-import type { IssueListResponseType, Issues } from 'types'
-import octokit, { OWNER, REPO } from 'utils/octokit'
+import github from 'services/github'
+import type { Issues } from 'types'
 
 const useIssues = (): [Issues, VoidFunction] => {
   const dispatch = useAppDispatch()
@@ -13,13 +13,7 @@ const useIssues = (): [Issues, VoidFunction] => {
   }, [dispatch])
 
   const fetch = useCallback(async () => {
-    const { data } = (await octokit.request(
-      `GET /repos/{owner}/{repo}/issues?page=${currentPage}&sort=comments`,
-      {
-        owner: OWNER,
-        repo: REPO,
-      },
-    )) as IssueListResponseType
+    const { data } = await github.getIssues(currentPage)
 
     dispatch(updateIssues(data))
   }, [currentPage, dispatch])
