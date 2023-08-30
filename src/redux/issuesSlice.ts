@@ -41,7 +41,6 @@ export const issuesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchIssues.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.issues = [...state.issues, ...action.payload]
       state.loadingState = 'loaded'
     })
