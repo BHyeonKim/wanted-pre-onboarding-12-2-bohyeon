@@ -15,6 +15,7 @@ const cx = classNames.bind(styles)
 const IssueList = forwardRef<HTMLLIElement, IssueListProps>(({ issues }, ref) => (
   <ul className={cx('issues')}>
     {issues?.map((issue, index) => {
+      const bannerKey = `banner-${index}`
       if ((index + 1) % 4 === 0)
         return (
           <>
@@ -26,7 +27,7 @@ const IssueList = forwardRef<HTMLLIElement, IssueListProps>(({ issues }, ref) =>
               title={issue.title}
               user={issue.user!.login}
             />
-            <Banner />
+            <Banner key={bannerKey} />
           </>
         )
       return (
