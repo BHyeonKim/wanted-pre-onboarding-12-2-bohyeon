@@ -1,0 +1,49 @@
+@use 'styles/constants/colors' as color;
+
+.issue {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height: 100px;
+  padding: 10px;
+  margin-bottom: 4px;
+  color: color.$BLACK;
+  border: 1px solid color.$BLACK;
+
+  & header {
+    display: flex;
+    flex-grow: 1;
+
+    & span {
+      margin-right: 8px;
+      font-family: Pretendard;
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    & h1 {
+      overflow: hidden;
+      font-size: 20px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  & footer {
+    display: flex;
+    flex-grow: 1;
+    font-size: 16px;
+
+    & span {
+      margin-right: 8px;
+    }
+  }
+
+  .comments {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+}
