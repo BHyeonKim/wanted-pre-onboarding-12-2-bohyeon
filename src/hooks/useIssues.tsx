@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toNextPage, updateIssues } from 'redux/issuesSlice'
 import { RootState } from 'redux/store'
 import type { IssueListResponseType, Issues } from 'types'
-import octokit from 'utils/octokit'
+import octokit, { OWNER, REPO } from 'utils/octokit'
 
 const useIssues = (): [Issues, VoidFunction] => {
   const dispatch = useDispatch()
@@ -17,8 +17,8 @@ const useIssues = (): [Issues, VoidFunction] => {
     const { data } = (await octokit.request(
       `GET /repos/{owner}/{repo}/issues?page=${currentPage}&sort=comments`,
       {
-        owner: 'facebook',
-        repo: 'react',
+        owner: OWNER,
+        repo: REPO,
       },
     )) as IssueListResponseType
 

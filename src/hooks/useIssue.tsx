@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Issue } from 'types'
-import octokit from 'utils/octokit'
+import octokit, { OWNER, REPO } from 'utils/octokit'
 
 const useIssue = (issueNumber: number) => {
   const [issue, setIssue] = useState<Issue>()
@@ -9,8 +9,8 @@ const useIssue = (issueNumber: number) => {
     const { data } = await octokit.request(
       'GET /repos/{owner}/{repo}/issues/{issue_number}',
       {
-        owner: 'facebook',
-        repo: 'react',
+        owner: OWNER,
+        repo: REPO,
         issue_number: issueNumber,
         headers: {
           'X-GitHub-Api-Version': '2022-11-28',
