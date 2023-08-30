@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/hooks'
-import { toNextPage, updateIssues } from 'redux/issuesSlice'
-import github from 'services/github'
+import { fetchIssues, toNextPage } from 'redux/issuesSlice'
 import type { Issues } from 'types'
 
 const useIssues = (): [Issues, VoidFunction] => {
@@ -12,16 +11,10 @@ const useIssues = (): [Issues, VoidFunction] => {
     dispatch(toNextPage())
   }, [dispatch])
 
-  const fetch = useCallback(async () => {
-    const { data } = await github.getIssues(currentPage)
-
-    dispatch(updateIssues(data))
-  }, [currentPage, dispatch])
-
   useEffect(() => {
     if (isLoaded) return
-    fetch()
-  }, [fetch, isLoaded])
+    dispatch(fetchIssues(currentPage))
+  }, [currentPage, dispatch, isLoaded])
 
   return [issues, moveToNextPage]
 }
