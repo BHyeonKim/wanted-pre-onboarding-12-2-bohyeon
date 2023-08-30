@@ -11,7 +11,6 @@
     "postinstall": "husky install"
   },
   "dependencies": {
-    "@octokit/types": "^11.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
     "classnames": "^2.3.2",
@@ -25,6 +24,7 @@
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
+    "@octokit/types": "^11.1.0",
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@types/node": "^20.5.7",
