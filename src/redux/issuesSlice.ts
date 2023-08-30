@@ -5,18 +5,19 @@ import { Issues } from 'types'
 export interface IssuesState {
   issues: Issues
   currentPage: number
-  isLoaded: boolean
+  loadingState: 'loaded' | 'notLoaded' | 'loading'
 }
 
 const initialState: IssuesState = {
   issues: [],
   currentPage: 1,
-  isLoaded: false,
+  loadingState: 'notLoaded',
 }
 
 export const fetchIssues = createAsyncThunk(
   'issues/fetchIssues',
-  async (currentPage: number) => {
+  async (currentPage: number, { dispatch }) => {
+    dispatch(startFetchIssues())
     const { data } = await github.getIssues(currentPage)
     return data
   },
@@ -28,22 +29,25 @@ export const issuesSlice = createSlice({
   reducers: {
     updateIssues: (state, action: PayloadAction<Issues>) => {
       state.issues = [...state.issues, ...action.payload]
-      state.isLoaded = true
+      state.loadingState = 'loaded'
     },
     toNextPage: (state) => {
       state.currentPage += 1
-      state.isLoaded = false
+      state.loadingState = 'notLoaded'
+    },
+    startFetchIssues: (state) => {
+      state.loadingState = 'loading'
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchIssues.fulfilled, (state, action) => {
       console.log(action.payload)
       state.issues = [...state.issues, ...action.payload]
-      state.isLoaded = true
+      state.loadingState = 'loaded'
     })
   },
 })
 
-export const { updateIssues, toNextPage } = issuesSlice.actions
+export const { updateIssues, toNextPage, startFetchIssues } = issuesSlice.actions
 
 export default issuesSlice.reducer

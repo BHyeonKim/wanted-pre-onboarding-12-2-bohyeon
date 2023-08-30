@@ -3,7 +3,7 @@ import useIssues from 'hooks/useIssues'
 import { useEffect, useRef } from 'react'
 
 const IssueListPage = () => {
-  const [issues, toNextPage] = useIssues()
+  const [issues, toNextPage, isLoading] = useIssues()
   const lastElRef = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const IssueListPage = () => {
     return () => observer.disconnect()
   }, [toNextPage])
 
-  return <IssueList issues={issues} ref={lastElRef} />
+  return <IssueList isLoading={isLoading} issues={issues} ref={lastElRef} />
 }
 
 export default IssueListPage
