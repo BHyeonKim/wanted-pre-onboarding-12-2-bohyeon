@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind'
+import { ErrorBoundary } from 'components/ErrorBoundary'
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
@@ -13,7 +14,9 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ title }) => (
   <main className={cx('main')}>
     <header className={cx('header')}>{title}</header>
-    <Outlet />
+    <ErrorBoundary>
+      <Outlet />
+    </ErrorBoundary>
   </main>
 )
 
