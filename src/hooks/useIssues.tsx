@@ -1,15 +1,12 @@
 import { useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import { toNextPage, updateIssues } from 'redux/issuesSlice'
-import { RootState } from 'redux/store'
 import type { IssueListResponseType, Issues } from 'types'
 import octokit, { OWNER, REPO } from 'utils/octokit'
 
 const useIssues = (): [Issues, VoidFunction] => {
-  const dispatch = useDispatch()
-  const { issues, currentPage, isLoaded } = useSelector(
-    (state: RootState) => state.issues,
-  )
+  const dispatch = useAppDispatch()
+  const { issues, currentPage, isLoaded } = useAppSelector((state) => state.issues)
 
   const moveToNextPage = useCallback(() => {
     dispatch(toNextPage())
