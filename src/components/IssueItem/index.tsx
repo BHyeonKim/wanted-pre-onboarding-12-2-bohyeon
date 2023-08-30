@@ -1,5 +1,7 @@
 import classNames from 'classnames/bind'
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
+import { generateDateString } from 'utils/dateString'
 
 import styles from './issueItem.module.scss'
 
@@ -19,23 +21,18 @@ const IssueItem: FC<IssueItemProps> = ({
   issueNumber,
   title,
   user,
-}) => {
-  const date = new Date(createdAt)
-  const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-
-  return (
-    <li className={cx('issue')}>
-      <header>
-        <span>#{issueNumber}</span>
-        <h1>{title}</h1>
-      </header>
-      <footer>
-        <span>Issued by: {user || 'anonymouse'}</span>
-        <time>create at: {dateString}</time>
-      </footer>
-      <span className={cx('comments')}>코멘트: {comments}</span>
-    </li>
-  )
-}
+}) => (
+  <Link className={cx('issue')} to={`/detail/${issueNumber}`}>
+    <header>
+      <span>#{issueNumber}</span>
+      <h1>{title}</h1>
+    </header>
+    <footer>
+      <span>Issued by: {user || 'anonymouse'}</span>
+      <time>create at: {generateDateString(createdAt)}</time>
+    </footer>
+    <span className={cx('comments')}>코멘트: {comments}</span>
+  </Link>
+)
 
 export default IssueItem
