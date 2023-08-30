@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import Banner from 'components/Banner'
 import IssueItem from 'components/IssueItem'
 import { forwardRef } from 'react'
-import { Issues } from 'types/types'
+import { Issues } from 'types'
 
 import styles from './issueList.module.scss'
 

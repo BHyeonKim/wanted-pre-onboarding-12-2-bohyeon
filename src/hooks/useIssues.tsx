@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toNextPage, updateIssues } from 'redux/issuesSlice'
 import { RootState } from 'redux/store'
-import type { IssueListResponseType, Issues } from 'types/types'
+import type { IssueListResponseType, Issues } from 'types'
 import octokit from 'utils/octokit'
 
 const useIssues = (): [Issues, VoidFunction] => {

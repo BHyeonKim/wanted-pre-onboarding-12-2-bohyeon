@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Issues } from 'types/types'
+import { Issues } from 'types'
 
 export interface IssuesState {
   issues: Issues

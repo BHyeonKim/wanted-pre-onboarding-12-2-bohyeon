@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Issue } from 'types/types'
+import { Issue } from 'types'
 import octokit from 'utils/octokit'
 
 const useIssue = (issueNumber: number) => {
