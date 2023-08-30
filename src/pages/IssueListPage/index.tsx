@@ -1,5 +1,4 @@
 import IssueList from 'components/IssueList'
-import Layout from 'components/Layout'
 import useIssues from 'hooks/useIssues'
 import { useEffect, useRef } from 'react'
 
@@ -24,11 +23,7 @@ const IssueListPage = () => {
     return () => observer.disconnect()
   }, [toNextPage])
 
-  return (
-    <Layout title="react">
-      <IssueList issues={issues} ref={lastElRef} />
-    </Layout>
-  )
+  return <IssueList issues={issues} ref={lastElRef} />
 }
 
 export default IssueListPage
