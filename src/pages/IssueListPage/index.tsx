@@ -8,12 +8,14 @@ const IssueListPage = () => {
   const lastElRef = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
+    const container = document.querySelector('.issues')
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) toNextPage()
       },
       {
-        root: document.querySelector('ul'),
+        root: container,
       },
     )
 
