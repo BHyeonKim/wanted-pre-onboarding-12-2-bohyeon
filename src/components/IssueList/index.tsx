@@ -15,7 +15,6 @@ const cx = classNames.bind(styles)
 const IssueList = forwardRef<HTMLLIElement, IssueListProps>(({ issues }, ref) => (
   <ul className={cx('issues')}>
     {issues?.map((issue, index) => {
-      console.log(index)
       if ((index + 1) % 4 === 0)
         return (
           <>
