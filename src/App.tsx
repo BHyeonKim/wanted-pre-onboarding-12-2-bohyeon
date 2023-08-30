@@ -1,14 +1,17 @@
 import 'styles/index.scss'
 
 import Layout from 'components/Layout'
-import DetailPage from 'pages/DetailPage'
-import IssueListPage from 'pages/IssueListPage'
+import LoadingSpinner from 'components/LoadingSpinner'
+import React, { Suspense } from 'react'
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from 'react-router-dom'
+
+const IssueListPage = React.lazy(() => import('pages/IssueListPage'))
+const DetailPage = React.lazy(() => import('pages/DetailPage'))
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +22,10 @@ const router = createBrowserRouter(
   ),
 )
 
-const App = () => <RouterProvider router={router} />
+const App = () => (
+  <Suspense fallback={<LoadingSpinner />}>
+    <RouterProvider router={router} />
+  </Suspense>
+)
 
 export default App
