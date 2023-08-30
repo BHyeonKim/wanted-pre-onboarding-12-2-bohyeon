@@ -7,7 +7,9 @@ import octokit, { OWNER, REPO } from 'utils/octokit'
 
 const useIssues = (): [Issues, VoidFunction] => {
   const dispatch = useDispatch()
-  const { issues, currentPage } = useSelector((state: RootState) => state.issues)
+  const { issues, currentPage, isLoaded } = useSelector(
+    (state: RootState) => state.issues,
+  )
 
   const moveToNextPage = useCallback(() => {
     dispatch(toNextPage())
@@ -26,8 +28,9 @@ const useIssues = (): [Issues, VoidFunction] => {
   }, [currentPage, dispatch])
 
   useEffect(() => {
+    if (isLoaded) return
     fetch()
-  }, [fetch])
+  }, [fetch, isLoaded])
 
   return [issues, moveToNextPage]
 }
