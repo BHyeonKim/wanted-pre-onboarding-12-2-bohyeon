@@ -9,9 +9,9 @@ const useIssues = (): [Issues, VoidFunction] => {
   const dispatch = useDispatch()
   const { issues, currentPage } = useSelector((state: RootState) => state.issues)
 
-  const moveToNextPage = () => {
+  const moveToNextPage = useCallback(() => {
     dispatch(toNextPage())
-  }
+  }, [dispatch])
 
   const fetch = useCallback(async () => {
     const { data } = (await octokit.request(
