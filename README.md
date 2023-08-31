@@ -10,22 +10,25 @@
 npm install && npm run dev
 
 ### 배포 링크
-
-https://comforting-elf-6f06c5.netlify.app/signin
-
-### 동영상
-https://github.com/BHyeonKim/wanted-pre-onboarding-frontend/assets/46583212/6ded7b7b-2845-49f2-be1b-4812a8cdeb7c
-
+https://bespoke-maamoul-dfa5a5.netlify.app/
 
 ### 구현사항
 1. 무한 스크롤
 
-https://github.com/BHyeonKim/wanted-pre-onboarding-frontend/assets/46583212/9405b33a-0550-4136-8c50-c53aa65a5042
+
+https://github.com/BHyeonKim/wanted-pre-onboarding-12-2-bohyeon/assets/46583212/002322ea-8a93-4c5a-b470-1b3564d1f85e
+
+
 
 2. 상세페이지
+<img width="619" alt="스크린샷 2023-09-01 오전 2 07 47" src="https://github.com/BHyeonKim/wanted-pre-onboarding-12-2-bohyeon/assets/46583212/c45e5da3-83ce-458e-863d-0038484193ba">
 
-https://github.com/BHyeonKim/wanted-pre-onboarding-frontend/assets/46583212/ce946a00-79c4-4dea-a943-b7d8d7758b2a
 
+### 사용 기술 스택
+
+- bundler: vite
+- language: typescript, scss
+- library: react, octokit, classnames, react markdown, react-syntax-highlighter, github-markdown-css, redux toolkit
 
 
 
