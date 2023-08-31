@@ -1,29 +1,22 @@
 import IssueList from 'components/IssueList'
-import useIssues from 'hooks/useIssues'
-import { useEffect, useRef } from 'react'
+import useInfiniteScroll from 'hooks/useInfiniteScroll'
+import { useAppDispatch, useAppSelector } from 'redux/hooks'
+import { fetchIssues } from 'redux/issuesSlice'
 
 const IssueListPage = () => {
-  const [issues, toNextPage, isLoading] = useIssues()
-  const lastElRef = useRef<HTMLLIElement>(null)
-
-  useEffect(() => {
-    const container = document.querySelector('.issues')
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) toNextPage()
-      },
-      {
-        root: container,
-      },
-    )
-
-    observer.observe(lastElRef.current!)
-
-    return () => observer.disconnect()
-  }, [toNextPage])
-
-  return <IssueList isLoading={isLoading} issues={issues} ref={lastElRef} />
+  const dispatch = useAppDispatch()
+  const { loadingState, issues } = useAppSelector((state) => state.issues)
+  const { containerRef, lastElRef } = useInfiniteScroll<HTMLUListElement, HTMLLIElement>(
+    () => !loadingState && dispatch(fetchIssues()),
+  )
+  return (
+    <IssueList
+      containerRef={containerRef}
+      isLoading={loadingState}
+      issues={issues}
+      lastElRef={lastElRef}
+    />
+  )
 }
 
 export default IssueListPage

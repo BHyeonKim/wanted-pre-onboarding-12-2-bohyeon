@@ -1,24 +1,26 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import github from 'services/github'
 import { Issues } from 'types'
+
+import { RootState } from './store'
 
 export interface IssuesState {
   issues: Issues
   currentPage: number
-  loadingState: 'loaded' | 'notLoaded' | 'loading'
+  loadingState: boolean
 }
 
 const initialState: IssuesState = {
   issues: [],
   currentPage: 1,
-  loadingState: 'notLoaded',
+  loadingState: false,
 }
 
-export const fetchIssues = createAsyncThunk(
+export const fetchIssues = createAsyncThunk<Issues, undefined, { state: RootState }>(
   'issues/fetchIssues',
-  async (currentPage: number, { dispatch }) => {
-    dispatch(startFetchIssues())
-    const { data } = await github.getIssues(currentPage)
+  async (_, { getState }) => {
+    const { issues } = getState()
+    const { data } = await github.getIssues(issues.currentPage)
     return data
   },
 )
@@ -26,27 +28,17 @@ export const fetchIssues = createAsyncThunk(
 export const issuesSlice = createSlice({
   name: 'issues',
   initialState,
-  reducers: {
-    updateIssues: (state, action: PayloadAction<Issues>) => {
-      state.issues = [...state.issues, ...action.payload]
-      state.loadingState = 'loaded'
-    },
-    toNextPage: (state) => {
-      state.currentPage += 1
-      state.loadingState = 'notLoaded'
-    },
-    startFetchIssues: (state) => {
-      state.loadingState = 'loading'
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchIssues.fulfilled, (state, action) => {
       state.issues = [...state.issues, ...action.payload]
-      state.loadingState = 'loaded'
+      state.currentPage += 1
+      state.loadingState = false
+    })
+    builder.addCase(fetchIssues.pending, (state) => {
+      state.loadingState = true
     })
   },
 })
-
-export const { updateIssues, toNextPage, startFetchIssues } = issuesSlice.actions
 
 export default issuesSlice.reducer
