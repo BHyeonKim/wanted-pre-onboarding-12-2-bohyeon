@@ -21,7 +21,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   render() {
-    console.log(this.state.error?.message)
     if (this.state.hasError) {
       return (
         <p>
